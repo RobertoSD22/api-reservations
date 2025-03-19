@@ -1,6 +1,8 @@
 package com.vuelos.reservations.dto;
 
-public class PassagerDTO {
+import java.time.LocalDate;
+
+public class PassengerDTO {
 
     private String firstName;
 
@@ -9,6 +11,8 @@ public class PassagerDTO {
     private String documentType;
 
     private String documentNumber;
+
+    private LocalDate birthday;
 
 
     public String getFirstName() {
@@ -41,5 +45,13 @@ public class PassagerDTO {
 
     public void setDocumentNumber(String documentNumber) {
         this.documentNumber = documentNumber;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }

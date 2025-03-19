@@ -6,7 +6,7 @@ public class ReservationDTO {
 
     private Long id;
 
-    private List<PassagerDTO> passagers;
+    private List<PassengerDTO> passagers;
 
     private ItineraryDTO itinerary;
 
@@ -19,11 +19,11 @@ public class ReservationDTO {
         this.id = id;
     }
 
-    public List<PassagerDTO> getPassagers() {
+    public List<PassengerDTO> getPassagers() {
         return passagers;
     }
 
-    public void setPassagers(List<PassagerDTO> passagers) {
+    public void setPassagers(List<PassengerDTO> passagers) {
         this.passagers = passagers;
     }
 
