@@ -38,6 +38,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Actuator -->
+		<!-- Sirve para monitorear la aplicación -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<!-- Mapstruct -->
 		<!-- Sirve para convertir objetos de un tipo a otro -->
 		<dependency>

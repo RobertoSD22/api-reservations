@@ -1,15 +1,30 @@
 management:
+  info:
+    env:
+      enabled: true #Habilita la exposici√≥n de informaci√≥n del entorno
+  endpoint:
+    health:
+      show-details: always #Muestra los detalles de la informaci√≥n de salud
   endpoints:
     web:
-      base-path: / #AquÌ se define el contexto de los endpoints de actuator
+      base-path: / #Aqu√≠ se define el contexto de los endpoints de actuator
       exposure:
-        include: '*' #AquÌ se definen los endpoints que se expondr·n
+        include: '*' #Aqu√≠ se definen los endpoints que se expondr√°n
 server:
-    port: 8080 #AquÌ se define el puerto en el que se ejecutar· la aplicaciÛn
-    servlet:
-        context-path: /api #AquÌ se define el contexto de la aplicaciÛn
+    port: 8081 #Aqu√≠ se define el puerto en el que se ejecutar√° la aplicaci√≥n
     compression:
-        enabled: true #Habilita la compresiÛn de las respuestas
-        min-response-size: 2048 #AquÌ se define el tamaÒo mÌnimo de la respuesta para que se comprima
-        mime-types: application/json, application/xml, text/html, text/plain #AquÌ se definen los tipos de contenido que se comprimir·n
+        enabled: true #Habilita la compresi√≥n de las respuestas
+        min-response-size: 2048 #Aqu√≠ se define el tama√±o m√≠nimo de la respuesta para que se comprima
+        mime-types: application/json, application/xml, text/html, text/plain #Aqu√≠ se definen los tipos de contenido que se comprimir√°n
+    servlet:
+      context-path: /api #Aqu√≠ se define el contexto de la aplicaci√≥n
+
+info:
+  application:
+    groupId: '@project.groupId@'
+    artifactId: '@project.artifactId@'
+    version: '@project.version@'
+    name: '@project.name@'
+    description: '@project.description@'
+
 
