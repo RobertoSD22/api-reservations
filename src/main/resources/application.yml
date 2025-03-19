@@ -1,0 +1,15 @@
+management:
+  endpoints:
+    web:
+      base-path: / #Aquí se define el contexto de los endpoints de actuator
+      exposure:
+        include: '*' #Aquí se definen los endpoints que se expondrán
+server:
+    port: 8080 #Aquí se define el puerto en el que se ejecutará la aplicación
+    servlet:
+        context-path: /api #Aquí se define el contexto de la aplicación
+    compression:
+        enabled: true #Habilita la compresión de las respuestas
+        min-response-size: 2048 #Aquí se define el tamaño mínimo de la respuesta para que se comprima
+        mime-types: application/json, application/xml, text/html, text/plain #Aquí se definen los tipos de contenido que se comprimirán
+
