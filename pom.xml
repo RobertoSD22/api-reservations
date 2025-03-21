@@ -45,6 +45,13 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Validation -->
+		<!-- Sirve para validar los datos que se envían en las peticiones -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 		<!-- Mapstruct -->
 		<!-- Sirve para convertir objetos de un tipo a otro -->
 		<dependency>

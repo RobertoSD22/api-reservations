@@ -1,13 +1,19 @@
 package com.vuelos.reservations.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.List;
 
 public class ReservationDTO {
 
     private Long id;
 
+    @Valid //Sirve para validar los atributos de los elementos de la lista (Nota: Si no se pone, no se validan)
+    @NotEmpty(message = "La lista de pasajeros no puede estar vacía")
     private List<PassengerDTO> passagers;
 
+    @Valid
     private ItineraryDTO itinerary;
 
 
