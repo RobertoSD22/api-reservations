@@ -1,6 +1,7 @@
 package com.vuelos.reservations.service;
 
 import com.vuelos.reservations.dto.ReservationDTO;
+import com.vuelos.reservations.enums.APIError;
 import com.vuelos.reservations.exception.ReservationException;
 import com.vuelos.reservations.model.Reservation;
 import com.vuelos.reservations.repository.ReservationRepository;
@@ -55,7 +56,7 @@ public class ReservationService {
     public ReservationDTO getReservationById(Long id) {
         Optional<Reservation> result = repository.getReservationById(id);
         if (result.isEmpty()) {
-            throw new ReservationException("No existe");
+            throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
         return conversionService.convert(result.get(), ReservationDTO.class);
     }
@@ -69,7 +70,7 @@ public class ReservationService {
      */
     public ReservationDTO save(ReservationDTO reservation) {
         if (Objects.nonNull(reservation.getId())) {
-            throw new ReservationException("Duplicado");
+            throw new ReservationException(APIError.RESERVATION_WITH_SAME_ID);
         }
         // 1.- Transformamos el DTO a una entidad de tipo Reservation
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
@@ -89,7 +90,7 @@ public class ReservationService {
      */
     public ReservationDTO update(Long id, ReservationDTO reservation) {
         if (getReservationById(id) == null) {
-            throw new ReservationException("No existe");
+            throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
         // 1.- Transformamos el DTO a una entidad de tipo Reservation
         Reservation transformed = conversionService.convert(reservation, Reservation.class);
@@ -107,7 +108,7 @@ public class ReservationService {
      */
     public void delete(Long id) {
         if (getReservationById(id) == null) {
-            throw new ReservationException("No existe");
+            throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
         repository.delete(id);
     }
