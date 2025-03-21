@@ -11,5 +11,5 @@ import java.util.List;
 public interface ReservationsMapper extends Converter<List<Reservation>, List<ReservationDTO>>  {
 
     @Override
-    public List<ReservationDTO> convert(List<Reservation> source);
+    List<ReservationDTO> convert(List<Reservation> source);
 }

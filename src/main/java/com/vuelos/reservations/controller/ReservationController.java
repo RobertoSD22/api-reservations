@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private ReservationService service;
+    private final ReservationService service;
 
     @Autowired
     public ReservationController(ReservationService service) {

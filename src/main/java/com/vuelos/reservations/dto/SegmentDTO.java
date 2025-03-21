@@ -4,10 +4,10 @@ import com.vuelos.reservations.validation.CityFormatConstraint;
 
 public class SegmentDTO {
 
-    @CityFormatConstraint // Esta anotación personalizada valida que el campo tenga 3 caracteres y sean letras mayúsculas
+    @CityFormatConstraint // Esta anotación personalizada válida que el campo tenga 3 caracteres y sean letras mayúsculas
     private String origin;
 
-    @CityFormatConstraint // Esta anotación personalizada valida que el campo tenga 3 caracteres y sean letras mayúsculas
+    @CityFormatConstraint // Esta anotación personalizada válida que el campo tenga 3 caracteres y sean letras mayúsculas
     private String destination;
 
     private String departure;

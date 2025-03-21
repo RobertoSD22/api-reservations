@@ -11,7 +11,7 @@ public class ReservationDTO {
 
     @Valid //Sirve para validar los atributos de los elementos de la lista (Nota: Si no se pone, no se validan)
     @NotEmpty(message = "La lista de pasajeros no puede estar vacía")
-    private List<PassengerDTO> passagers;
+    private List<PassengerDTO> passengers;
 
     @Valid
     private ItineraryDTO itinerary;
@@ -25,12 +25,12 @@ public class ReservationDTO {
         this.id = id;
     }
 
-    public List<PassengerDTO> getPassagers() {
-        return passagers;
+    public List<PassengerDTO> getPassengers() {
+        return passengers;
     }
 
-    public void setPassagers(List<PassengerDTO> passagers) {
-        this.passagers = passagers;
+    public void setPassengers(List<PassengerDTO> passengers) {
+        this.passengers = passengers;
     }
 
     public ItineraryDTO getItinerary() {
