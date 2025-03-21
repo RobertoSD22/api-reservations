@@ -31,7 +31,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDTO> getReservationById(@PathVariable Long id) {
+    public ResponseEntity<ReservationDTO> getReservationById(@Min(1) @PathVariable Long id) {
         ReservationDTO response = service.getReservationById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

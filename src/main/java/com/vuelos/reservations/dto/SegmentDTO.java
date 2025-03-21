@@ -1,14 +1,13 @@
 package com.vuelos.reservations.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.vuelos.reservations.validation.CityFormatConstraint;
 
 public class SegmentDTO {
 
-    @NotBlank(message = "El campo origin no puede estar vacío")
-    @Size(min = 3, max = 3, message = "El campo origin debe tener 3 caracteres")
+    @CityFormatConstraint // Esta anotación personalizada valida que el campo tenga 3 caracteres y sean letras mayúsculas
     private String origin;
 
+    @CityFormatConstraint // Esta anotación personalizada valida que el campo tenga 3 caracteres y sean letras mayúsculas
     private String destination;
 
     private String departure;
