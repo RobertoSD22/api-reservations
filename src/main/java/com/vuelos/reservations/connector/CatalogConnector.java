@@ -23,9 +23,6 @@ public class CatalogConnector {
 
     private final HttpConnectorConfiguration configuration;
 
-    private final String HOST = "api-catalog";
-    private final String ENDPOINT = "get-city";
-
     @Autowired
     public CatalogConnector(HttpConnectorConfiguration configuration) {
         this.configuration = configuration;
@@ -33,6 +30,11 @@ public class CatalogConnector {
 
     @CircuitBreaker(name = "api-catalog")
     public CityDTO getCity(String code) {
+
+        System.out.println("<============================== calling getCity");
+
+        String HOST = "api-catalog";
+        String ENDPOINT = "get-city";
 
         HostConfiguration hostConfiguration = configuration.getHosts().get(HOST);
         EndpointConfiguration endpointConfiguration = hostConfiguration.getEndpoints().get(ENDPOINT);
@@ -44,7 +46,12 @@ public class CatalogConnector {
                         .addHandlerLast(new WriteTimeoutHandler(endpointConfiguration.getWriteTimeout(), TimeUnit.MILLISECONDS)));
 
         WebClient webClient = WebClient.builder()
-                .baseUrl(endpointConfiguration.getProtocol() + "://" + hostConfiguration.getHost() + ":" + hostConfiguration.getPort() + endpointConfiguration.getUrl())
+                .baseUrl(
+                        endpointConfiguration.getProtocol() + "://" +
+                        hostConfiguration.getHost() + ":" +
+                        hostConfiguration.getPort() +
+                        endpointConfiguration.getUrl()
+                )
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
@@ -56,4 +63,26 @@ public class CatalogConnector {
                 .share() // Sirve para compartir el resultado de la llamada con varios suscriptores
                 .block(); // Sirve para bloquear la ejecución hasta que se obtenga el resultado (sincrónico) si fuera asincrónico se usaría subscribe
     }
+
+    /** Este método sirve para definir el comportamiento que se tendrá en caso de que falle la llamada al servicio
+     * para el caso de una call not permitted exception
+     * Este comportamiento se activa en cualquier momento en el método getCity
+     **/
+    /*private CityDTO getCityFallback(String code, CallNotPermittedException exception) {
+
+        System.out.println("calling fallback method-1");
+
+        return new CityDTO();
+    }*/
+
+    /** Este método sirve para definir el comportamiento que se tendrá en caso de que falle la llamada al servicio
+     * para el caso de una exception
+     * Este comportamiento se activa en cualquier momento en el método getCity
+     **/
+    /*private CityDTO getCityFallback(String code, Exception exception) {
+
+        System.out.println("calling fallback method-2");
+
+        throw new ReservationException(APIError.COMMUNICATION_ERROR);
+    }*/
 }

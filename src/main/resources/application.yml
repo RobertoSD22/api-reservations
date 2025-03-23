@@ -40,7 +40,7 @@ http-connector:
           readTimeout: 1000 #Es en milisegundos (seria 1 segundo). Tiempo de espera de comunicación con el servicio
           writeTimeout: 1000 #Tiempo que se tarda en responder el servicio
 
-resilence4j:
+resilience4j:
   circuitbreaker:
     configs: #Aquí se definen las configuraciones de los circuit breaker
       default: #Aquí se define la configuración por defecto

@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<lombok.version>1.18.22</lombok.version>
 		<resilience4j.version>2.1.0</resilience4j.version>
 	</properties>
@@ -60,6 +60,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<!-- AOP -->
+		<!-- Sirve para programación orientada a aspectos -->
+		<!-- En el ejercicio de la clase sirve para manejar interceptores -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
 		<!-- Mapstruct -->

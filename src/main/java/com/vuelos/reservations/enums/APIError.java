@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum APIError {
 
+    COMMUNICATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Error de comunicación con el servicio"),
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "Los atributos de la petición no son válidos"),
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "Reserva no encontrada"),
     RESERVATION_WITH_SAME_ID(HttpStatus.CONFLICT, "Ya existe una reserva con el mismo ID"),
