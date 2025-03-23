@@ -14,13 +14,13 @@
 	<name>api-reservations</name>
 	<description>Api para reservas de vuelos</description>
 
-
 	<properties>
 		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<lombok.version>1.18.22</lombok.version>
 		<resilience4j.version>2.1.0</resilience4j.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.8.5</springdoc-openapi-starter-webmvc-ui.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -64,10 +64,18 @@
 
 		<!-- AOP -->
 		<!-- Sirve para programación orientada a aspectos -->
-		<!-- En el ejercicio de la clase sirve para manejar interceptores -->
+		<!-- En el ejercicio de la clase sirve para manejar interceptores (se agrego junto con el webflux)-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- OpenAPI -->
+		<!-- Sirve para documentar la API -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 
 		<!-- Mapstruct -->
@@ -87,7 +95,7 @@
 		</dependency>
 
 		<!-- Resilience4j -->
-		<!-- Sirve para el tema de circuit breaker, retry, rate limiter, etc. -->
+		<!-- Sirve para el tema de circuit breaker, rate limiter, retry, etc. -->
 		<dependency>
 			<groupId>io.github.resilience4j</groupId>
 			<artifactId>resilience4j-spring-boot3</artifactId>

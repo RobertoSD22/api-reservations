@@ -26,7 +26,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/reservations")
-public class ReservationController {
+public class ReservationController implements ReservationResource {
 
     private final ReservationService service;
 
@@ -35,18 +35,21 @@ public class ReservationController {
         this.service = service;
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getReservations() {
         List<ReservationDTO> response = service.getReservations();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<ReservationDTO> getReservationById(@Min(1) @PathVariable Long id) {
         ReservationDTO response = service.getReservationById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
     @PostMapping
     @RateLimiter(name = "create-reservation", fallbackMethod = "createReservationFallback")
     public ResponseEntity<ReservationDTO> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
@@ -54,6 +57,7 @@ public class ReservationController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<ReservationDTO> updateReservation(
             @Min(1) @PathVariable Long id, @Valid @RequestBody ReservationDTO reservationDTO) {
@@ -61,6 +65,7 @@ public class ReservationController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@Min(1) @PathVariable Long id) {
         service.delete(id);
