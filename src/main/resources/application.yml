@@ -1,5 +1,5 @@
 management:
-  info:
+  info: #Está sección se encarga de exponer información personalizada en el endpoint info
     env:
       enabled: true #Habilita la exposición de información del entorno
   endpoint:
@@ -19,12 +19,27 @@ server:
     servlet:
       context-path: /api #Aquí se define el contexto de la aplicación
 
-info:
+info: #Aqui se definen las propiedades personalizadas que se expondrán en el endpoint info NOTA: Las propiedades provienen del archivo pom.xml
   application:
     groupId: '@project.groupId@'
     artifactId: '@project.artifactId@'
     version: '@project.version@'
     name: '@project.name@'
     description: '@project.description@'
+
+http-connector:
+  hosts:
+    api-catalog:
+      host: localhost #Aquí se define el host del servicio api-catalog (El servicio del profesor)
+      port: 6070 #Aquí se define el puerto del servicio api-catalog
+      endpoints:
+        get-city:
+          protocol: http #Aquí se define el protocolo de comunicación
+          url: "/api/flights/catalog/city/{code}"
+          connectionTimeout: 1000 #Tiempo de espera de conexión con el servicio
+          readTimeout: 1000 #Es en milisegundos (seria 1 segundo). Tiempo de espera de comunicación con el servicio
+          writeTimeout: 1000 #Tiempo que se tarda en responder el servicio
+
+
 
 

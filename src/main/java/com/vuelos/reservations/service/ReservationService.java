@@ -53,7 +53,7 @@ public class ReservationService {
             throw new ReservationException(APIError.RESERVATION_WITH_SAME_ID);
         }
 
-        this.checkCityt(reservation);
+        this.checkCity(reservation);
 
         Reservation transformed = reservationMapper.toReservation(reservation);
         Reservation result = repository.save(Objects.requireNonNull(transformed));
@@ -65,7 +65,7 @@ public class ReservationService {
             throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
 
-        this.checkCityt(reservation);
+        this.checkCity(reservation);
 
         Reservation transformed = reservationMapper.toReservation(reservation);
         Reservation result = repository.update(id, Objects.requireNonNull(transformed));
@@ -79,7 +79,7 @@ public class ReservationService {
         repository.delete(id);
     }
 
-    private void checkCityt(ReservationDTO reservationDTO) {
+    private void checkCity(ReservationDTO reservationDTO) {
         for (SegmentDTO segmentDTO : reservationDTO.getItinerary().getSegments()) {
             CityDTO origin = catalogConnector.getCity(segmentDTO.getOrigin());
 
