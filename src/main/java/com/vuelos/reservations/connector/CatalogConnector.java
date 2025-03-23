@@ -4,6 +4,9 @@ import com.vuelos.reservations.connector.configuration.EndpointConfiguration;
 import com.vuelos.reservations.connector.configuration.HostConfiguration;
 import com.vuelos.reservations.connector.configuration.HttpConnectorConfiguration;
 import com.vuelos.reservations.connector.response.CityDTO;
+import com.vuelos.reservations.enums.APIError;
+import com.vuelos.reservations.exception.ReservationException;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -28,7 +31,7 @@ public class CatalogConnector {
         this.configuration = configuration;
     }
 
-    @CircuitBreaker(name = "api-catalog")
+    @CircuitBreaker(name = "api-catalog", fallbackMethod = "getCityFallback")
     public CityDTO getCity(String code) {
 
         System.out.println("<============================== calling getCity");
@@ -68,21 +71,21 @@ public class CatalogConnector {
      * para el caso de una call not permitted exception
      * Este comportamiento se activa en cualquier momento en el método getCity
      **/
-    /*private CityDTO getCityFallback(String code, CallNotPermittedException exception) {
+    private CityDTO getCityFallback(String code, CallNotPermittedException exception) {
 
         System.out.println("calling fallback method-1");
 
         return new CityDTO();
-    }*/
+    }
 
     /** Este método sirve para definir el comportamiento que se tendrá en caso de que falle la llamada al servicio
      * para el caso de una exception
      * Este comportamiento se activa en cualquier momento en el método getCity
      **/
-    /*private CityDTO getCityFallback(String code, Exception exception) {
+    private CityDTO getCityFallback(String code, Exception exception) {
 
         System.out.println("calling fallback method-2");
 
         throw new ReservationException(APIError.COMMUNICATION_ERROR);
-    }*/
+    }
 }
