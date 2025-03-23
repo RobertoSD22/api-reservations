@@ -1,7 +1,12 @@
 package com.vuelos.reservations.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Getter
+@Setter
 public class Reservation {
 
     private Long id;
@@ -10,28 +15,4 @@ public class Reservation {
 
     private Itinerary itinerary;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Passenger> getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(List<Passenger> passengers) {
-        this.passengers = passengers;
-    }
-
-    public Itinerary getItinerary() {
-        return itinerary;
-    }
-
-    public void setItinerary(Itinerary itinerary) {
-        this.itinerary = itinerary;
-    }
 }

@@ -1,7 +1,12 @@
 package com.vuelos.reservations.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Getter
+@Setter
 public class ErrorDTO {
 
     private String description;
@@ -11,22 +16,6 @@ public class ErrorDTO {
 
     public ErrorDTO(String description, List<String> reasons) {
         this.description = description;
-        this.reasons = reasons;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getReasons() {
-        return reasons;
-    }
-
-    public void setReasons(List<String> reasons) {
         this.reasons = reasons;
     }
 }
