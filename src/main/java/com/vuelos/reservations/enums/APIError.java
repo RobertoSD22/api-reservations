@@ -11,7 +11,8 @@ public enum APIError {
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "Reserva no encontrada"),
     RESERVATION_WITH_SAME_ID(HttpStatus.CONFLICT, "Ya existe una reserva con el mismo ID"),
     CITY_ORIGIN_NOT_FOUND(HttpStatus.BAD_REQUEST, "La ciudad origen enviada no existe"),
-    CITY_DESTINATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "La ciudad destino enviada no existe");
+    CITY_DESTINATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "La ciudad destino enviada no existe"),
+    LIMIT_EXCEEDED_REQUEST(HttpStatus.TOO_MANY_REQUESTS, "Se ha excedido el límite de peticiones");
 
     private final HttpStatus httpStatus;
 

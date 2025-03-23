@@ -59,4 +59,12 @@ resilience4j:
     instances:
         api-catalog: #Aquí se define el circuit breaker para el servicio api-catalog
             baseConfig: default #Aquí se define la configuración base
-
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 2 #Aquí se define el límite de llamadas por periodo
+        limit-refresh-period: 3s #Aquí se define el tiempo de refresco del límite
+        timeout-duration: 1s #Aquí se define el tiempo de espera para la llamada que exceda el límite (en este ejemplo sería la 3ra)
+    instances:
+      create-reservation:
+        baseConfig: default #Aquí se define la configuración base
