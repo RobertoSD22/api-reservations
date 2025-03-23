@@ -40,6 +40,23 @@ http-connector:
           readTimeout: 1000 #Es en milisegundos (seria 1 segundo). Tiempo de espera de comunicación con el servicio
           writeTimeout: 1000 #Tiempo que se tarda en responder el servicio
 
+resilence4j:
+  circuitbreaker:
+    configs: #Aquí se definen las configuraciones de los circuit breaker
+      default: #Aquí se define la configuración por defecto
+        failure-rate-threshold: 50 #Aquí se define el porcentaje de fallos para abrir el circuit breaker
+        sliding-window-size: 5 #El número de llamadas que se tendrán en cuenta para calcular el porcentaje de fallos
+        sliding-window-type: count_based #Cómo se calculará el porcentaje de fallos
 
+        automatic-transition-from-open-to-half-open-enabled: true #Habilita la transición automática de abierto a semiabierto
+        wait-duration-in-open-state: 10s #Aquí se define el tiempo que se esperará para cambiar de estado abierto a semiabierto
+        permitted-number-of-calls-in-half-open-state: 1 #Aquí se define el número de llamadas permitidas entre microservicios en estado semiabierto
 
+        register-health-indicator: false #No cuentes los errores de salud en el circuit breaker
+        record-excetions:
+          - io.netty.handler.timeout.ReadTimeoutException
+          - java.lang.RuntimeException
+    instances:
+        api-catalog: #Aquí se define el circuit breaker para el servicio api-catalog
+            baseConfig: default #Aquí se define la configuración base
 

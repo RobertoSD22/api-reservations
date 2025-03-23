@@ -4,6 +4,7 @@ import com.vuelos.reservations.connector.configuration.EndpointConfiguration;
 import com.vuelos.reservations.connector.configuration.HostConfiguration;
 import com.vuelos.reservations.connector.configuration.HttpConnectorConfiguration;
 import com.vuelos.reservations.connector.response.CityDTO;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
@@ -30,6 +31,7 @@ public class CatalogConnector {
         this.configuration = configuration;
     }
 
+    @CircuitBreaker(name = "api-catalog")
     public CityDTO getCity(String code) {
 
         HostConfiguration hostConfiguration = configuration.getHosts().get(HOST);

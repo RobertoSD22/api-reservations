@@ -5,11 +5,9 @@ import com.vuelos.reservations.model.Reservation;
 import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
-public interface ReservationsMapper extends Converter<List<Reservation>, List<ReservationDTO>> {
+public interface ReservationDTOMapper extends Converter<ReservationDTO, Reservation> {
 
     @Override
-    List<ReservationDTO> convert(List<Reservation> source);
+    Reservation convert(ReservationDTO source);
 }

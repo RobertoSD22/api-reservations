@@ -6,11 +6,10 @@ import com.vuelos.reservations.dto.ReservationDTO;
 import com.vuelos.reservations.dto.SegmentDTO;
 import com.vuelos.reservations.enums.APIError;
 import com.vuelos.reservations.exception.ReservationException;
-import com.vuelos.reservations.mapper.ReservationMapper;
-import com.vuelos.reservations.mapper.ReservationsMapper;
 import com.vuelos.reservations.model.Reservation;
 import com.vuelos.reservations.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,24 +19,21 @@ import java.util.Optional;
 @Service
 public class ReservationService {
 
-    private final ReservationMapper reservationMapper;
-    private final ReservationsMapper reservationsMapper;
+    private final ConversionService conversionService;
     private final ReservationRepository repository;
     private final CatalogConnector catalogConnector;
 
     @Autowired
     public ReservationService(
-            ReservationMapper reservationMapper, ReservationsMapper reservationsMapper,
+            ConversionService conversionService,
             ReservationRepository repository, CatalogConnector catalogConnector) {
-        this.reservationMapper = reservationMapper;
-        this.reservationsMapper = reservationsMapper;
+        this.conversionService = conversionService;
         this.repository = repository;
         this.catalogConnector = catalogConnector;
     }
 
     public List<ReservationDTO> getReservations() {
-        List<Reservation> reservations = repository.getReservations();
-        return reservationsMapper.toReservationDTOList(reservations);
+        return conversionService.convert(repository.getReservations(), List.class);
     }
 
     public ReservationDTO getReservationById(Long id) {
@@ -45,7 +41,7 @@ public class ReservationService {
         if (result.isEmpty()) {
             throw new ReservationException(APIError.RESERVATION_NOT_FOUND);
         }
-        return reservationMapper.toReservationDTO(result.get());
+        return conversionService.convert(result.get(), ReservationDTO.class);
     }
 
     public ReservationDTO save(ReservationDTO reservation) {
@@ -55,9 +51,9 @@ public class ReservationService {
 
         this.checkCity(reservation);
 
-        Reservation transformed = reservationMapper.toReservation(reservation);
+        Reservation transformed = conversionService.convert(reservation, Reservation.class);
         Reservation result = repository.save(Objects.requireNonNull(transformed));
-        return reservationMapper.toReservationDTO(result);
+        return conversionService.convert(result, ReservationDTO.class);
     }
 
     public ReservationDTO update(Long id, ReservationDTO reservation) {
@@ -67,9 +63,9 @@ public class ReservationService {
 
         this.checkCity(reservation);
 
-        Reservation transformed = reservationMapper.toReservation(reservation);
+        Reservation transformed = conversionService.convert(reservation, Reservation.class);
         Reservation result = repository.update(id, Objects.requireNonNull(transformed));
-        return reservationMapper.toReservationDTO(result);
+        return conversionService.convert(result, ReservationDTO.class);
     }
 
     public void delete(Long id) {

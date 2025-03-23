@@ -8,8 +8,8 @@ import org.springframework.core.convert.converter.Converter;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface ReservationsMapper extends Converter<List<Reservation>, List<ReservationDTO>> {
+public interface ReservationsDTOMapper extends Converter<List<ReservationDTO>, List<Reservation>> {
 
     @Override
-    List<ReservationDTO> convert(List<Reservation> source);
+    List<Reservation> convert(List<ReservationDTO> source);
 }
