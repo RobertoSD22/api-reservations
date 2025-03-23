@@ -7,7 +7,9 @@ public enum APIError {
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "Los atributos de la petición no son válidos"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "El mensaje de la petición no es válido"),
     RESERVATION_NOT_FOUND(HttpStatus.NOT_FOUND, "Reserva no encontrada"),
-    RESERVATION_WITH_SAME_ID(HttpStatus.CONFLICT, "Ya existe una reserva con el mismo ID");
+    RESERVATION_WITH_SAME_ID(HttpStatus.CONFLICT, "Ya existe una reserva con el mismo ID"),
+    CITY_ORIGIN_NOT_FOUND(HttpStatus.BAD_REQUEST, "La ciudad origen enviada no existe"),
+    CITY_DESTINATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "La ciudad destino enviada no existe");
 
     private final HttpStatus httpStatus;
 

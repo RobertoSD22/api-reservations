@@ -3,6 +3,8 @@ package com.vuelos.reservations.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.util.Objects;
+
 public class CityFormatValidator implements ConstraintValidator <CityFormatConstraint, String> {
 
     @Override
@@ -12,6 +14,6 @@ public class CityFormatValidator implements ConstraintValidator <CityFormatConst
 
     @Override
     public boolean isValid(String campo, ConstraintValidatorContext constraintValidatorContext) {
-        return campo != null && campo.length() == 3 && campo.matches("[A-Z]");
+        return Objects.nonNull(campo) && campo.matches("^[A-Z]{3}$");
     }
 }
