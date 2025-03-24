@@ -11,6 +11,8 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,6 +26,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class CatalogConnector {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CatalogConnector.class);
+
     private final HttpConnectorConfiguration configuration;
 
     @Autowired
@@ -34,7 +38,7 @@ public class CatalogConnector {
     @CircuitBreaker(name = "api-catalog", fallbackMethod = "getCityFallback")
     public CityDTO getCity(String code) {
 
-        System.out.println("<============================== calling getCity");
+        LOGGER.debug("<============================== calling getCity");
 
         String HOST = "api-catalog";
         String ENDPOINT = "get-city";
@@ -73,7 +77,7 @@ public class CatalogConnector {
      **/
     private CityDTO getCityFallback(String code, CallNotPermittedException exception) {
 
-        System.out.println("calling fallback method-1");
+        LOGGER.error("calling fallback method-1");
 
         return new CityDTO();
     }
@@ -84,7 +88,7 @@ public class CatalogConnector {
      **/
     private CityDTO getCityFallback(String code, Exception exception) {
 
-        System.out.println("calling fallback method-2");
+        LOGGER.error("calling fallback method-2");
 
         throw new ReservationException(APIError.COMMUNICATION_ERROR);
     }

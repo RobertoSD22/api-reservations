@@ -8,6 +8,8 @@ import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,8 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController implements ReservationResource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationResource.class);
+
     private final ReservationService service;
 
     @Autowired
@@ -38,6 +42,7 @@ public class ReservationController implements ReservationResource {
     @Override
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getReservations() {
+        LOGGER.info("Inicia la búsqueda de todas las reservas");
         List<ReservationDTO> response = service.getReservations();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -45,6 +50,7 @@ public class ReservationController implements ReservationResource {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ReservationDTO> getReservationById(@Min(1) @PathVariable Long id) {
+        LOGGER.info("Inicia la búsqueda de la reserva con id: {}", id);
         ReservationDTO response = service.getReservationById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -53,6 +59,7 @@ public class ReservationController implements ReservationResource {
     @PostMapping
     @RateLimiter(name = "create-reservation", fallbackMethod = "createReservationFallback")
     public ResponseEntity<ReservationDTO> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
+        LOGGER.info("Inicia la creación de una nueva reserva");
         ReservationDTO response = service.save(reservationDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -61,6 +68,7 @@ public class ReservationController implements ReservationResource {
     @PutMapping("/{id}")
     public ResponseEntity<ReservationDTO> updateReservation(
             @Min(1) @PathVariable Long id, @Valid @RequestBody ReservationDTO reservationDTO) {
+        LOGGER.info("Inicia la actualización la reserva con id: {}", id);
         ReservationDTO response = service.update(id, reservationDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -68,6 +76,7 @@ public class ReservationController implements ReservationResource {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@Min(1) @PathVariable Long id) {
+        LOGGER.info("Inicia la eliminación de la reserva con id: {}", id);
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -75,7 +84,7 @@ public class ReservationController implements ReservationResource {
     private ResponseEntity<ReservationDTO> createReservationFallback(
              @RequestBody ReservationDTO reservationDTO, RequestNotPermitted exception) {
 
-        System.out.println("Fallback method for createReservation called");
+        LOGGER.debug("Fallback method for createReservation called");
 
         throw new ReservationException(APIError.LIMIT_EXCEEDED_REQUEST);
     }

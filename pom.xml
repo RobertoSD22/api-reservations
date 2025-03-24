@@ -75,6 +75,13 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+		<!-- Logging -->
+		<!-- Sirve para manejar los logs de la aplicación -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
 		<!-- OpenAPI -->
 		<!-- Sirve para documentar la API -->
 		<dependency>
@@ -148,7 +155,7 @@
 		</plugins>
 	</build>
 
-	<profiles>
+	<!--<profiles>
 		<profile>
 			<id>OPEN API</id>
 			<build>
@@ -157,23 +164,23 @@
 						<groupId>org.springframework.boot</groupId>
 						<artifactId>spring-boot-maven-plugin</artifactId>
 						<configuration>
-							<wait>10000</wait> <!-- Tiempo de espera para que se levante la aplicación (10 segundos) -->
-							<maxAttempts>180</maxAttempts> <!-- Número de intentos para levantar la aplicación -->
+							<wait>10000</wait> &lt;!&ndash; Tiempo de espera para que se levante la aplicación (10 segundos) &ndash;&gt;
+							<maxAttempts>180</maxAttempts> &lt;!&ndash; Número de intentos para levantar la aplicación &ndash;&gt;
 						</configuration>
 						<executions>
-							<execution><!-- Para que se ejecute el plugin de OpenAPI -->
+							<execution>&lt;!&ndash; Para que se ejecute el plugin de OpenAPI &ndash;&gt;
 								<goals>
 									<goal>repackage</goal>
 								</goals>
 							</execution>
-							<execution> <!-- Primer paso para levantar la aplicación -->
+							<execution> &lt;!&ndash; Primer paso para levantar la aplicación &ndash;&gt;
 								<id>start-app</id>
 								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>start</goal>
 								</goals>
 							</execution>
-							<execution> <!-- Segundo paso bajar la aplicación -->
+							<execution> &lt;!&ndash; Segundo paso bajar la aplicación &ndash;&gt;
 								<id>stop-app</id>
 								<phase>post-integration-test</phase>
 								<goals>
@@ -183,7 +190,7 @@
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>org.springdoc</groupId> <!-- Plugin de OpenAPI --> <!-- Sirve para validar la documentación de la API -->
+						<groupId>org.springdoc</groupId> &lt;!&ndash; Plugin de OpenAPI &ndash;&gt; &lt;!&ndash; Sirve para validar la documentación de la API &ndash;&gt;
 						<artifactId>springdoc-openapi-maven-plugin</artifactId>
 						<version>${springdoc-openapi-maven-plugin.version}</version>
 						<executions>
@@ -196,9 +203,9 @@
 							</execution>
 						</executions>
 						<configuration>
-							<apiDocsUrl>http://localhost:8081/api/v3/api-docs</apiDocsUrl> <!-- URL de la documentación -->
-							<outputFileName>openapi-salida-documentacion.json</outputFileName> <!-- Nombre del archivo -->
-							<outputDir>${project.build.directory}</outputDir> <!-- Directorio donde se va a guardar el archivo -->
+							<apiDocsUrl>http://localhost:8081/api/v3/api-docs</apiDocsUrl> &lt;!&ndash; URL de la documentación &ndash;&gt;
+							<outputFileName>openapi-salida-documentacion.json</outputFileName> &lt;!&ndash; Nombre del archivo &ndash;&gt;
+							<outputDir>${project.build.directory}</outputDir> &lt;!&ndash; Directorio donde se va a guardar el archivo &ndash;&gt;
 							<skip>false</skip>
 						</configuration>
 					</plugin>
@@ -216,11 +223,11 @@
 							</execution>
 						</executions>
 						<configuration>
-							<failOn>MUST</failOn> <!-- Hay diferentes niveles de validación, MUST son al menos las que debemos cumplir -->
-							<source>target/openapi-salida-documentacion.json</source><!-- Archivo de documentación (que se definió arriba-->
-							<resultFile>target/openapi-resultado-documentacion.json</resultFile><!-- Archivo de resultados -->
+							<failOn>MUST</failOn> &lt;!&ndash; Hay diferentes niveles de validación, MUST son al menos las que debemos cumplir &ndash;&gt;
+							<source>target/openapi-salida-documentacion.json</source>&lt;!&ndash; Archivo de documentación (que se definió arriba&ndash;&gt;
+							<resultFile>target/openapi-resultado-documentacion.json</resultFile>&lt;!&ndash; Archivo de resultados &ndash;&gt;
 						</configuration>
-						<dependencies> <!-- Contiene las reglas que se van a usar para validar la documentación -->
+						<dependencies> &lt;!&ndash; Contiene las reglas que se van a usar para validar la documentación &ndash;&gt;
 							<dependency>
 								<groupId>org.zalando</groupId>
 								<artifactId>zally-ruleset-zalando</artifactId>
@@ -232,6 +239,6 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
+	</profiles>-->
 
 </project>
