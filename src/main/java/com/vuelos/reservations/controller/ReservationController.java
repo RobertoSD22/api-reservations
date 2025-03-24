@@ -6,6 +6,7 @@ import com.vuelos.reservations.exception.ReservationException;
 import com.vuelos.reservations.service.ReservationService;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.slf4j.Logger;
@@ -14,14 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 import java.util.List;
 
@@ -79,6 +83,18 @@ public class ReservationController implements ReservationResource {
         LOGGER.info("Inicia la eliminación de la reserva con id: {}", id);
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
+        for (var violation : ex.getConstraintViolations()) {
+            if ("updateReservation.id".equals(violation.getPropertyPath().toString()) &&
+                    violation.getConstraintDescriptor().getAnnotation().annotationType().equals(Min.class)) {
+                return ResponseEntity.badRequest().body("El ID debe ser mayor a 1.");
+            }
+        }
+        return ResponseEntity.badRequest().body("Error de validación en la solicitud.");
     }
 
     private ResponseEntity<ReservationDTO> createReservationFallback(
