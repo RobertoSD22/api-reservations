@@ -1,4 +1,11 @@
 services:
+  api-reservations:
+    image: robertosd22/api-reservations:1.0.0
+    container_name: api-reservations
+    ports:
+      - 8081:8081
+    restart: always
+
   api-catalog:
     image: adschosen/api-catalog:1.1.0
     container_name: api-catalog
