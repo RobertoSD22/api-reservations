@@ -1,0 +1,70 @@
+management:
+  info: #Está sección se encarga de exponer información personalizada en el endpoint info
+    env:
+      enabled: true #Habilita la exposición de información del entorno
+  endpoint:
+    health:
+      show-details: always #Muestra los detalles de la información de salud
+  endpoints:
+    web:
+      base-path: / #Aquí se define el contexto de los endpoints de actuator
+      exposure:
+        include: '*' #Aquí se definen los endpoints que se expondrán
+server:
+    port: 8081 #Aquí se define el puerto en el que se ejecutará la aplicación
+    compression:
+        enabled: true #Habilita la compresión de las respuestas
+        min-response-size: 2048 #Aquí se define el tamaño mínimo de la respuesta para que se comprima
+        mime-types: application/json, application/xml, text/html, text/plain #Aquí se definen los tipos de contenido que se comprimirán
+    servlet:
+      context-path: /api #Aquí se define el contexto de la aplicación
+
+info: #Aqui se definen las propiedades personalizadas que se expondrán en el endpoint info NOTA: Las propiedades provienen del archivo pom.xml
+  application:
+    groupId: '@project.groupId@'
+    artifactId: '@project.artifactId@'
+    version: '@project.version@'
+    name: '@project.name@'
+    description: '@project.description@'
+
+http-connector:
+  hosts:
+    api-catalog:
+      host: localhost #Aquí se define el host del servicio api-catalog (El servicio del profesor)
+      port: 6070 #Aquí se define el puerto del servicio api-catalog
+      endpoints:
+        get-city:
+          protocol: http #Aquí se define el protocolo de comunicación
+          url: "/api/flights/catalog/city/{code}"
+          connectionTimeout: 10000 #Tiempo de espera de conexión con el servicio
+          readTimeout: 10000 #Es en milisegundos (seria 1 segundo). Tiempo de espera de comunicación con el servicio
+          writeTimeout: 10000 #Tiempo que se tarda en responder el servicio
+
+resilience4j:
+  circuitbreaker:
+    configs: #Aquí se definen las configuraciones de los circuit breaker
+      default: #Aquí se define la configuración por defecto
+        failure-rate-threshold: 50 #Aquí se define el porcentaje de fallos para abrir el circuit breaker
+        sliding-window-size: 5 #El número de llamadas que se tendrán en cuenta para calcular el porcentaje de fallos
+        sliding-window-type: count_based #Cómo se calculará el porcentaje de fallos
+
+        automatic-transition-from-open-to-half-open-enabled: true #Habilita la transición automática de abierto a semiabierto
+        wait-duration-in-open-state: 10s #Aquí se define el tiempo que se esperará para cambiar de estado abierto a semiabierto
+        permitted-number-of-calls-in-half-open-state: 1 #Aquí se define el número de llamadas permitidas entre microservicios en estado semiabierto
+
+        register-health-indicator: false #No cuentes los errores de salud en el circuit breaker
+        record-excetions:
+          - io.netty.handler.timeout.ReadTimeoutException
+          - java.lang.RuntimeException
+    instances:
+        api-catalog: #Aquí se define el circuit breaker para el servicio api-catalog
+            baseConfig: default #Aquí se define la configuración base
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 2 #Aquí se define el límite de llamadas por periodo
+        limit-refresh-period: 3s #Aquí se define el tiempo de refresco del límite
+        timeout-duration: 1s #Aquí se define el tiempo de espera para la llamada que exceda el límite (en este ejemplo sería la 3ra)
+    instances:
+      create-reservation:
+        baseConfig: default #Aquí se define la configuración base
