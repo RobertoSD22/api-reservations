@@ -152,6 +152,31 @@
 				</configuration>
 			</plugin>
 
+			<!-- Enforcer -->
+			<!-- Sirve para validar las versiones de las dependencias y de Java -->
+			<!-- En el ejemplo del maestro se usa para que mande error en caso de que dependencias choquen -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven-enforcer-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<dependencyConvergence />
+								<requireJavaVersion>
+									<version>${java.version}</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
